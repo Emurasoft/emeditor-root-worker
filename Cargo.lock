@@ -64,7 +64,6 @@ name = "emeditor-root-worker"
 version = "0.1.0"
 dependencies = [
  "worker",
- "worker-macros",
 ]
 
 [[package]]
