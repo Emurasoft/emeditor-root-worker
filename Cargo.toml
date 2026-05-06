@@ -8,8 +8,8 @@ authors = ["Makoto Emura <makoto@emurasoft.com>"]
 crate-type = ["cdylib"]
 
 [dependencies]
-worker = { version = "0.8" }
-url = { version="2.5.8" }
+worker = { version = "0.8", default-features = false }
+url = { version="2.5.8", default-features = false }
 
 [lints.clippy]
 similar_names = "allow"
