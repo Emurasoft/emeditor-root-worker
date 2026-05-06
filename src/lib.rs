@@ -1,22 +1,22 @@
 use worker::*;
 
 enum WorkerError {
-    Client(String),
-    Server(String),
+    Client(Error),
+    Server(Error),
 }
 
 impl std::fmt::Display for WorkerError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            WorkerError::Client(msg) => write!(f, "{}", msg),
-            WorkerError::Server(msg) => write!(f, "{}", msg),
+            WorkerError::Client(e) => write!(f, "{}", e),
+            WorkerError::Server(e) => write!(f, "{}", e),
         }
     }
 }
 
 impl From<Error> for WorkerError {
     fn from(e: Error) -> Self {
-        WorkerError::Server(e.to_string())
+        WorkerError::Server(e)
     }
 }
 
@@ -36,7 +36,7 @@ async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
 }
 
 async fn handle(req: Request, env: Env) -> std::result::Result<Response, WorkerError> {
-    let url = req.url().map_err(|e| WorkerError::Client(e.to_string()))?;
+    let url = req.url().map_err(WorkerError::Client)?;
     let path = url.path();
     let base_url = env.var("BASE_URL")?.to_string();
     let base_hostname = env.var("BASE_HOSTNAME")?.to_string();
@@ -51,9 +51,9 @@ async fn handle(req: Request, env: Env) -> std::result::Result<Response, WorkerE
     // Redirect emeditor.com/* → www.emeditor.com/* (302)
     if url.host_str().unwrap_or("") == base_hostname {
         let resolved_url = format!("{}{}", base_url, path);
-        let parsed = resolved_url
-            .parse()
-            .map_err(|e: url::ParseError| WorkerError::Client(e.to_string()))?;
+        let parsed = resolved_url.parse().map_err(|e: url::ParseError| {
+            WorkerError::Client(Error::RustError(e.to_string()))
+        })?;
         return Response::redirect_with_status(parsed, 302).map_err(Into::into);
     }
 
