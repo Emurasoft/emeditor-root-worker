@@ -11,9 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Install corepack
+        run: npm install -g corepack
+
       - uses: actions/setup-node@v6
         with:
-          node-version: '25'
+          node-version: '25.6'
           cache: 'yarn'
 
       - name: Install deps
