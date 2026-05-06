@@ -1,0 +1,1 @@
+# emeditor-root-worker

@@ -1,3 +1,5 @@
-target
-node_modules
-.wrangler
+/target
+/node_modules
+/.wrangler
+/.pnp.cjs
+/.yarn
