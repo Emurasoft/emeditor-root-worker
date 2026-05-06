@@ -40,9 +40,6 @@ async fn handle(req: Request, env: Env) -> std::result::Result<Response, WorkerE
     let path = url.path();
     let base_url = env.var("BASE_URL")?.to_string();
     let base_hostname = env.var("BASE_HOSTNAME")?.to_string();
-    console_log!("url {}", url);
-    console_log!("request base_url {}", url.host_str().unwrap_or(""));
-    console_log!("base_url {}", base_url);
 
     // Serve /sitemap_index.xml and /robots.txt
     if path == "/sitemap_index.xml" || path == "/robots.txt" {
