@@ -7,9 +7,11 @@ command = "cargo install -q \"worker-build@^0.8\" && worker-build --release --pa
 
 [vars]
 BASE_URL = "https://www.emeditor.com"
+BASE_HOSTNAME = "emeditor.com"
 
 [env.dev.vars]
 BASE_URL = "http://localhost:8787"
+BASE_HOSTNAME = "localhost"
 
 [assets]
 directory = "./assets"
