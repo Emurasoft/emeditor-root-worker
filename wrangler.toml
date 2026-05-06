@@ -12,3 +12,13 @@ BASE_HOSTNAME = "emeditor.com"
 [assets]
 directory = "./assets"
 binding = "ASSETS"
+
+[observability]
+enabled = false
+head_sampling_rate = 1
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+persist = true
+invocation_logs = true
