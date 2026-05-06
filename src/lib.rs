@@ -8,8 +8,7 @@ enum WorkerError {
 impl std::fmt::Display for WorkerError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            WorkerError::Client(e) => write!(f, "{}", e),
-            WorkerError::Server(e) => write!(f, "{}", e),
+            WorkerError::Client(e) | WorkerError::Server(e) => write!(f, "{e}"),
         }
     }
 }
@@ -26,11 +25,11 @@ async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
         Ok(res) => Ok(res),
         Err(WorkerError::Client(e)) => {
             console_warn!("client error: {}", e);
-            Response::error(format!("Bad Request: {}", e), 400)
+            Response::error(format!("Bad Request: {e}"), 400)
         }
         Err(WorkerError::Server(e)) => {
             console_error!("worker error: {}", e);
-            Response::error(format!("Internal Server Error: {}", e), 500)
+            Response::error(format!("Internal Server Error: {e}"), 500)
         }
     }
 }
@@ -43,14 +42,14 @@ async fn handle(req: Request, env: Env) -> std::result::Result<Response, WorkerE
 
     // Serve /sitemap_index.xml and /robots.txt
     if path == "/sitemap_index.xml" || path == "/robots.txt" {
-        let resolved_url = format!("{}{}", base_url, path);
+        let resolved_url = format!("{base_url}{path}");
         let assets = env.assets("ASSETS")?;
         return assets.fetch(resolved_url, None).await.map_err(Into::into);
     }
 
     // Redirect emeditor.com/* → www.emeditor.com/* (302)
     if url.host_str().unwrap_or("") == base_hostname {
-        let resolved_url = format!("{}{}", base_url, path);
+        let resolved_url = format!("{base_url}{path}");
         let parsed = resolved_url.parse().map_err(|e: url::ParseError| {
             WorkerError::Client(Error::RustError(e.to_string()))
         })?;
