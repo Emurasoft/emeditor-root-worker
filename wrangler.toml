@@ -5,6 +5,12 @@ compatibility_date = "2026-05-05"
 [build]
 command = "cargo install -q \"worker-build@^0.8\" && worker-build --release --panic-unwind"
 
+[vars]
+BASE_URL = "https://www.emeditor.com"
+
+[env.dev.vars]
+BASE_URL = "http://localhost:8787"
+
 [assets]
 directory = "./assets"
 binding = "ASSETS"

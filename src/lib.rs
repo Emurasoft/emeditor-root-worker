@@ -8,13 +8,8 @@ async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
 
     // Serve /sitemap_index.xml and /robots.txt
     if path == "/sitemap_index.xml" || path == "/robots.txt" {
-        let req_url = req.url()?;
-        let resolved_url = format!(
-            "{}://{}{}",
-            req_url.scheme(),
-            req_url.host_str().unwrap_or("localhost"),
-            path
-        );
+        let base_url = env.var("BASE_URL")?.to_string();
+        let resolved_url = format!("{}{}", base_url, path);
         let assets = env.assets("ASSETS")?;
         return assets.fetch(resolved_url, None).await;
     }
