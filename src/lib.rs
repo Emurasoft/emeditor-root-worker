@@ -6,7 +6,7 @@ async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
     let hostname = url.host_str().unwrap_or("");
     let path = url.path();
 
-    // Serve sitemap_index.xml from the assets binding
+    // Serve /sitemap_index.xml and /robots.txt
     if path == "/sitemap_index.xml" || path == "/robots.txt" {
         let req_url = req.url()?;
         let resolved_url = format!(
