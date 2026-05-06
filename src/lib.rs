@@ -2,6 +2,16 @@ use worker::*;
 
 #[event(fetch)]
 async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
+    match handle(req, env).await {
+        Ok(res) => Ok(res),
+        Err(e) => {
+            console_error!("worker error: {}", e);
+            Response::error(format!("Internal Server Error: {}", e), 500)
+        }
+    }
+}
+
+async fn handle(req: Request, env: Env) -> Result<Response> {
     let url = req.url()?;
     let path = url.path();
     let base_url = env.var("BASE_URL")?.to_string();
