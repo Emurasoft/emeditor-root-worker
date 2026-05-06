@@ -5,6 +5,10 @@ compatibility_date = "2026-05-05"
 [build]
 command = "cargo install -q \"worker-build@^0.8\" && worker-build --release --panic-unwind"
 
+[[routes]]
+pattern = "emeditor.com/*"
+zone_name = "emeditor.com"
+
 [vars]
 BASE_URL = "https://www.emeditor.com"
 BASE_HOSTNAME = "emeditor.com"
