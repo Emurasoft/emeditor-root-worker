@@ -1,7 +1,7 @@
 {
   "name": "emeditor-root-worker",
-  "packageManager": "yarn@4.11.0",
+  "packageManager": "yarn@4.16.0",
   "dependencies": {
-    "wrangler": "^4.98.0"
+    "wrangler": "^4.99.0"
   }
 }
