@@ -8,4 +8,19 @@
     <sitemap>
         <loc>https://www.emeditor.com/sitemap.xml</loc>
     </sitemap>
+    <sitemap>
+        <loc>https://de.emeditor.com/sitemap.xml</loc>
+    </sitemap>
+    <sitemap>
+        <loc>https://jp.emeditor.com/sitemap.xml</loc>
+    </sitemap>
+    <sitemap>
+        <loc>https://ko.emeditor.com/sitemap.xml</loc>
+    </sitemap>
+    <sitemap>
+        <loc>https://zh-cn.emeditor.com/sitemap.xml</loc>
+    </sitemap>
+    <sitemap>
+        <loc>https://zh-tw.emeditor.com/sitemap.xml</loc>
+    </sitemap>
 </sitemapindex>
